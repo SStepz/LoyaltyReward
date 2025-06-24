@@ -33,4 +33,14 @@ class HomeViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void sortAscending() {
+    _rewards.sort((a, b) => a.rewardPoints.compareTo(b.rewardPoints));
+    notifyListeners();
+  }
+
+  void sortDescending() {
+    _rewards.sort((a, b) => b.rewardPoints.compareTo(a.rewardPoints));
+    notifyListeners();
+  }
 }

@@ -61,35 +61,55 @@ class HomeView extends StatelessWidget {
           )
         ],
       ),
-      body: viewModel.rewards.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : GridView.builder(
-              padding: const EdgeInsets.all(10),
-              itemCount: viewModel.rewards.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.75,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+      body: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () => viewModel.sortAscending(),
+                child: const Text('Sort by Points (Ascending)'),
               ),
-              itemBuilder: (context, index) {
-                final item = viewModel.rewards[index];
-                return RewardCard(
-                  item: item,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => RewardDetailView(
-                        item: item,
-                        user: user,
-                        viewModel: viewModel,
-                      ),
+              TextButton(
+                onPressed: () => viewModel.sortDescending(),
+                child: const Text('Sort by Points (Descending)'),
+              ),
+            ],
+          ),
+          Expanded(
+            child: viewModel.rewards.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : GridView.builder(
+                    padding: const EdgeInsets.all(10),
+                    itemCount: viewModel.rewards.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.75,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
                     ),
+                    itemBuilder: (context, index) {
+                      final item = viewModel.rewards[index];
+                      return RewardCard(
+                        item: item,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => RewardDetailView(
+                              item: item,
+                              user: user,
+                              viewModel: viewModel,
+                            ),
+                          ),
+                        ),
+                        onToggleSave: () => viewModel.toggleSave(item),
+                      );
+                    },
                   ),
-                  onToggleSave: () => viewModel.toggleSave(item),
-                );
-              },
-            ),
+          ),
+        ],
+      ),
     );
   }
 }

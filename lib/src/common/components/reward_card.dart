@@ -18,6 +18,9 @@ class RewardCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         elevation: 3,
         child: Column(
           children: [
@@ -26,10 +29,17 @@ class RewardCard extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: Image.network(
-                      item.imageUrl,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                        image: DecorationImage(
+                          image: NetworkImage(item.imageUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(
